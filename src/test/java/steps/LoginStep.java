@@ -6,6 +6,7 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import pages.LoginPage;
@@ -13,9 +14,7 @@ import pages.LoginPage;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Karthik on 10/15/2016.
- */
+
 public class LoginStep extends BaseUtil{
 
     private  BaseUtil base;
@@ -24,26 +23,13 @@ public class LoginStep extends BaseUtil{
         this.base = base;
     }
 
-    @Then("^I should see the userform page$")
-    public void iShouldSeeTheUserformPage() throws Throwable {
-
-        Assert.assertEquals("Its not displayed", base.Driver.findElement(By.id("Initial")).isDisplayed(), true);
-    }
-
     @Given("^I navigate to the login page$")
     public void iNavigateToTheLoginPage() throws Throwable {
 
         System.out.println("Navigate Login Page");
         base.Driver.navigate().to("http://www.executeautomation.com/demosite/Login.html");
+        //base.Driver.navigate().to("https://github.com/login");
     }
-
-
-    @And("^I click login button$")
-    public void iClickLoginButton() throws Throwable {
-        LoginPage page = new LoginPage(base.Driver);
-        page.ClickLogin();
-    }
-
 
     @And("^I enter the following for Login$")
     public void iEnterTheFollowingForLogin(DataTable table) throws Throwable {
@@ -55,7 +41,7 @@ public class LoginStep extends BaseUtil{
         LoginPage page = new LoginPage(base.Driver);
 
         for (User user: users){
-           page.Login(user.username, user.password);
+            page.Login(user.username, user.password);
         }
     }
 
@@ -65,10 +51,25 @@ public class LoginStep extends BaseUtil{
         System.out.println("Password is : " + password);
     }
 
+    @When("^I click login button$")
+    public void iClickLoginButton() throws Throwable {
+        LoginPage page = new LoginPage(base.Driver);
+        page.ClickLogin();
+    }
+
+
+    @Then("^I should see the userform page$")
+    public void iShouldSeeTheUserformPage() throws Throwable {
+
+        Assert.assertEquals("Its not displayed", base.Driver.findElement(By.id("Initial")).isDisplayed(), true);
+    }
+
+
+
     @Then("^I should see the userform page wrongly$")
     public void iShouldSeeTheUserformPageWrongly() throws Throwable {
 
-        Assert.assertEquals("Its not displayed", base.Driver.findElement(By.id("sdfgdsfsd")).isDisplayed(), true);
+        Assert.assertEquals("Its not displayed", base.Driver.findElement(By.id("invalidID")).isDisplayed(), true);
     }
 
 

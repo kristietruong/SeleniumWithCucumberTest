@@ -6,13 +6,21 @@ Feature: LoginFeature
     And I enter the following for Login
       | username | password      |
       | admin    | adminpassword |
-    And I click login button
+    When I click login button
     Then I should see the userform page
 
-  Scenario: Login with correct username and password to fail
+  Scenario: Login with incorrect username and password to fail
+    Given I navigate to the login page
+    And I enter the following for Login
+      | username | password        |
+      | admin    | invalidpassword |
+    When I click login button
+    Then I should see the userform page wrongly
+
+  Scenario: Login with empty username and password to fail
     Given I navigate to the login page
     And I enter the following for Login
       | username | password      |
-      | admin    | adminpassword |
-    And I click login button
+      |          |               |
+    When I click login button
     Then I should see the userform page wrongly
